@@ -1,23 +1,38 @@
 <template>
   <div class="hello">
     <h1>{{ msg }}</h1>
-    <button @click="count++">count is: {{ count }}</button>
+    <button @click="increment">count is: {{ state.count }}</button>
     <p>Edit <code>components/HelloWorld.vue</code> to test hot module replacement.</p>
   </div>
 </template>
 
-<script>
-export default {
-  name: 'HelloWorld',
+<script lang="ts">
+import { reactive, defineComponent } from 'vue'
+
+type State = {
+  count: number
+}
+
+export default defineComponent({
+  name: "HelloWorld",
   props: {
     msg: String
   },
-  data() {
-    return {
+  setup() {
+    const state = reactive<State>({
       count: 0
+    });
+
+    function increment() {
+      state.count++
     }
+
+    return {
+      state,
+      increment
+    };
   }
-}
+});
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
